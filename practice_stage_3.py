@@ -21,4 +21,6 @@ games = [
 
 print("Twoja biblioteka gier:")
 for game in games:
-    print("-", game['title'])
+    print("\n-", game['title'])
+    for k, v in game.items():
+        print(f"\t{k}: {v}")
