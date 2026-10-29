@@ -5,7 +5,7 @@ while answer != "nie":
     game = {}
     game['title'] = input("Podaj tytuł gry: ")
     game['platform'] = input("Podaj platformę: ")
-    game['hours_played'] = input("Podaj liczbę godzin gry: ")
+    game['hours_played'] = int(input("Podaj liczbę godzin gry: "))
     game['completed'] = input("Czy gra została ukończona? ").strip().lower()
     games.append(game)
 
@@ -27,8 +27,11 @@ for game in games:
         print("Gra nie została jeszcze ukończona.")
     else:
         print("Nie mogę jednoznacznie stwierdzić czy gra została ukończona po wprowadzonej informacji.")
+print()
 
+total_h = 0
 
+for game in games:
+    total_h += game['hours_played']
 
-
-
+print("Łączny czas spędzony w grach:", total_h)
