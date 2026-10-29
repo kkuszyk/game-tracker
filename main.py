@@ -1,19 +1,31 @@
-game = {}
+games = []
+answer = "tak"
 
-game['title'] = input("Podaj tytuł gry: ")
-game['platform'] = input("Podaj platformę: ")
-game['hours_played'] = input("Podaj liczbę godzin gry: ")
-game['is_completed'] = input("Czy gra została ukończona? ")
+while answer == "tak":
+    game = {}
+    game['title'] = input("Podaj tytuł gry: ")
+    game['platform'] = input("Podaj platformę: ")
+    game['hours_played'] = input("Podaj liczbę godzin gry: ")
+    game['completed'] = input("Czy gra została ukończona? ")
+    games.append(game)
+
+    answer = input("Czy chcesz dodać kolejną grę? [tak/nie] ")
+
 
 print()
-print("--- TWOJA GRA ---")
-print(f"Tytuł: {game['title']}")
-print(f"Platforma: {game['platform']}")
-print(f"Czas gry: {game['hours_played']}")
+print("--- Twoja biblioteka gier ---")
+for game in games:
+    print("\nTytuł:", game['title'])
+    print("Platforma:", game['platform'])
+    print("Czas gry:", game['hours_played'])
+    if game['completed'] == "tak":
+        print("Gra została ukończona.")
+    elif game['completed'] == "nie":
+        print("Gra nie została jeszcze ukończona.")
+    else:
+        print("Nie mogę jednoznacznie stwierdzić czy gra została ukończona po wprowadzonej informacji.")
 
-if game['is_completed'] == "tak":
-    print("Gra została ukończona.")
-elif game['is_completed'] == "nie":
-    print("Gra nie została jeszcze ukończona.")
-else:
-    print("Nie mogę jednoznacznie stwierdzić czy gra została ukończona po wprowadzonej informacji.")
+
+
+
+
