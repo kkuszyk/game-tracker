@@ -5,7 +5,14 @@ while answer != "nie":
     game = {}
     game['title'] = input("Podaj tytuł gry: ")
     game['platform'] = input("Podaj platformę: ")
-    game['hours_played'] = int(input("Podaj liczbę godzin gry: "))
+
+    while True:
+        try:
+            game['hours_played'] = int(input("Podaj liczbę godzin gry: "))
+            break
+        except ValueError:
+            print("Niepoprawna wartość. Oczekiwana liczba całkowita.")
+
     game['completed'] = input("Czy gra została ukończona? ").strip().lower()
     games.append(game)
 
