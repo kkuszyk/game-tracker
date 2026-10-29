@@ -19,8 +19,12 @@ games = [
     }
 ]
 
-print("Twoja biblioteka gier:")
+print("Twoja biblioteka gier\n")
 for game in games:
-    print("\n-", game['title'])
-    for k, v in game.items():
-        print(f"\t{k}: {v}")
+    print(game['title'])
+    print("Platforma:", game['platform'])
+    print("Czas gry:", game['hours_played'], "godzin")
+    if game['completed']:
+        print("Ukończona: Tak\n")
+    else:
+        print("Ukończona: Nie\n")
