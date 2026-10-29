@@ -20,8 +20,8 @@ games = [
 ]
 
 print("Twoja biblioteka gier\n")
-for game in games:
-    print(game['title'])
+for index, game in enumerate(games, start=1):
+    print(f"{index}.", {game['title']})
     print("Platforma:", game['platform'])
     print("Czas gry:", game['hours_played'], "godzin")
     if game['completed']:
