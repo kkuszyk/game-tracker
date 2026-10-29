@@ -1,15 +1,18 @@
 games = []
 answer = "tak"
 
-while answer == "tak":
+while answer != "nie":
     game = {}
     game['title'] = input("Podaj tytuł gry: ")
     game['platform'] = input("Podaj platformę: ")
     game['hours_played'] = input("Podaj liczbę godzin gry: ")
-    game['completed'] = input("Czy gra została ukończona? ")
+    game['completed'] = input("Czy gra została ukończona? ").strip().lower()
     games.append(game)
 
-    answer = input("Czy chcesz dodać kolejną grę? [tak/nie] ")
+    answer = input("Czy chcesz dodać kolejną grę? [tak/nie] ").strip().lower()
+
+    while answer not in ("tak", "nie"):
+        answer = input("Czy chcesz dodać kolejną grę? [tak/nie] ").strip().lower()
 
 
 print()
