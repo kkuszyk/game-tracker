@@ -26,7 +26,20 @@ for game in games:
     print("Czas gry:", game['hours_played'])
     print("Gra ukończona:", game['completed'].capitalize())
 print()
+print("--- Statystyki biblioteki ---")
 total_h = 0
 for game in games:
     total_h += game['hours_played']
 print("Łączny czas spędzony w grach:", total_h)
+all_games = 0
+completed_games = 0
+uncompleted_games = 0
+for game in games:
+    all_games += 1
+    if game['completed'] == "tak":
+        completed_games += 1
+    elif game['completed'] == "nie":
+        uncompleted_games += 1
+print("Liczba wszystkich gier:", all_games)
+print("Liczba ukończonych gier:", completed_games)
+print("Liczba nieukończonych gier:", uncompleted_games)
