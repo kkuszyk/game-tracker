@@ -1,3 +1,6 @@
+import json
+
+
 def get_game_data():
 
     game = {}
@@ -78,27 +81,62 @@ def display_game_statistics(
     print("Liczba nieukończonych gier:", uncompleted_games)
 
 
+def load_games(library):
+
+    try:
+        with open(library, "r") as file:
+            games = json.load(file)
+
+        return games
+
+    except FileNotFoundError:
+        games = []
+
+        return games
+
+
+
+def save_games(games, library):
+
+    with open(library, "w") as file:
+        json.dump(games, file, indent=4)
+
+
+
 def main():
 
-    games = []
-    answer = "tak"
+    print("Próba wczytania biblioteki gier z pliku JSON...")
+    print()
 
-    while answer != "nie":
+    games = load_games("games.json")
+
+    if games:
+
+        print("Biblioteka wczytana poprawnie.")
+        print()
+
+    else:
+
+        print("Nie odnaleziono biblioteki.")
+        print()
+        print("Rozpoczynam proces tworzenia nowej biblioteki.")
+        print()
 
         games.append(get_game_data())
 
-        answer = (
-            input("Czy chcesz dodać kolejną grę? [tak/nie] ")
-            .strip()
-            .lower()
-        )
+    while True:
 
-        while answer not in ("tak", "nie"):
-            answer = (
+        answer = (
                 input("Czy chcesz dodać kolejną grę? [tak/nie] ")
                 .strip()
                 .lower()
             )
+
+        if answer == "nie":
+            break
+
+        elif answer == "tak":
+            games.append(get_game_data())
 
     print()
     print("--- Twoja biblioteka gier ---")
@@ -109,6 +147,10 @@ def main():
     print()
     display_game_statistics(*calculate_game_statistics(games))
     print()
+
+    save_games(games, "games.json")
+
+    print("Stan biblioteki został zapisany w pliku 'games.json'.")
 
 
 if __name__ == "__main__":
