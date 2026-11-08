@@ -68,6 +68,14 @@ def display_game_library(games):
         print()
 
 
+def display_game_details(game):
+
+    print("Tytuł:", game['title'])
+    print("Platforma:", game['platform'])
+    print("Czas gry:", game['hours_played'])
+    print("Gra ukończona:", game['completed'].capitalize())
+
+
 def display_game_statistics(
     total_hours,
     all_games,
@@ -102,6 +110,49 @@ def save_games(games, library):
         json.dump(games, file, indent=4)
 
 
+def search_game(games, title):
+
+    for game in games:
+        if title.lower().strip() == game['title'].lower():
+            return game
+    else:
+        print("Nie odnaleziono gry. Spróbuj ponownie.")
+
+
+def add_games(games):
+
+    games.append(get_game_data())
+    print()
+    print("Gra została pomyślnie dodana.")
+
+    while True:
+
+        answer = (
+                input("Czy chcesz dodać kolejną grę? [tak/nie] ")
+                .strip()
+                .lower()
+            )
+
+        if answer == "nie":
+            break
+
+        elif answer == "tak":
+            games.append(get_game_data())
+            print()
+            print("Gra została pomyślnie dodana.")
+
+
+def dial_menu():
+
+    print("""
+Możliwe akcje:
+1 - Wyświetl pełną bibliotekę.
+2 - Wyszukaj konkretny tytuł.
+3 - Dodaj nowe tytuły do biblioteki.
+4 - Wyświetl pełne statystyki gier.
+5 - Zapisz obecny stan i zamknij aplikację.
+""")
+
 
 def main():
 
@@ -121,37 +172,60 @@ def main():
         print()
         print("Rozpoczynam proces tworzenia nowej biblioteki.")
         print()
+        add_games(games)
+        print()
 
-        games.append(get_game_data())
+    dial_menu()
 
     while True:
 
-        answer = (
-                input("Czy chcesz dodać kolejną grę? [tak/nie] ")
-                .strip()
-                .lower()
-            )
+        try:
 
-        if answer == "nie":
+            option = int(input("Wybierz opcję: "))
+
+            while option not in (1,2,3,4,5):
+                print("Wartość spoza zakresu możliwych opcji. Spróbuj ponownie.")
+                option = int(input("Wybierz opcję: "))
+
+        except ValueError:
+            print("Nie rozpoznano wartości. Oczekiwana wartość liczbowa. Spróbuj ponownie.")
+            option = None
+
+        if option == 1:
+            print()
+            print("--- Twoja biblioteka gier ---")
+            print()
+            display_game_library(games)
+            dial_menu()
+
+        if option == 2:
+            title = search_game(games, input("Podaj tytuł gry: "))
+
+            while title:
+                print()
+                print("--- Wyszukana gra ---")
+                print()
+                display_game_details(title)
+                print()
+                dial_menu()
+                break
+
+        if option == 3:
+            add_games(games)
+            dial_menu()
+
+        if option == 4:
+            print()
+            print("--- Statystyki biblioteki ---")
+            print()
+            display_game_statistics(*calculate_game_statistics(games))
+            print()
+            dial_menu()
+
+        if option == 5:
+            save_games(games, "games.json")
+            print("Stan biblioteki został zapisany w pliku 'games.json'.")
             break
-
-        elif answer == "tak":
-            games.append(get_game_data())
-
-    print()
-    print("--- Twoja biblioteka gier ---")
-    print()
-    display_game_library(games)
-
-    print("--- Statystyki biblioteki ---")
-    print()
-    display_game_statistics(*calculate_game_statistics(games))
-    print()
-
-    save_games(games, "games.json")
-
-    print("Stan biblioteki został zapisany w pliku 'games.json'.")
-
 
 if __name__ == "__main__":
     main()
